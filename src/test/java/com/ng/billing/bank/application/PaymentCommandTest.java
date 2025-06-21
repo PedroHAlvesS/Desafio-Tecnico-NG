@@ -50,12 +50,12 @@ class PaymentCommandTest {
 
             @BeforeEach
             void setUp() {
-                expectedResponse = new AccountResponseDto("123", new BigDecimal("90.00"));
+                expectedResponse = new AccountResponseDto("123", new BigDecimal("0.00"));
                 accountEntity = new AccountEntity(1L, "123", new BigDecimal("100.00"));
                 when(accountRepository.findByAccountNumber("123")).thenReturn(Optional.of(accountEntity));
                 when(accountMapper.accountEntityToAccountResponseDto(accountEntity)).thenReturn(expectedResponse);
 
-                result = paymentCommand.execute(new PaymentRequestDto("123", new BigDecimal("10.00"), PaymentMethodTypeEnum.PIX));
+                result = paymentCommand.execute(new PaymentRequestDto("123", new BigDecimal("100.00"), PaymentMethodTypeEnum.PIX));
             }
             @Test
             @DisplayName("Then return AccountResponseDto")
@@ -67,6 +67,12 @@ class PaymentCommandTest {
             @DisplayName("Then should save account")
             void thenCallAccountRepositorySave() {
                 verify(accountRepository).save(accountEntity);
+            }
+
+            @Test
+            @DisplayName("Then should entity balance should be 0")
+            void thenEntityBalanceShouldBeZero() {
+                assertEquals(new BigDecimal("0.00"), accountEntity.getAccountBalance());
             }
         }
 
