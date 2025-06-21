@@ -27,9 +27,11 @@ public class AccountResource {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public AccountResponseDto getAccount(@RequestParam(value = "numero_conta", required = true) String accountNumber) {
-        return retrieveAccountCommand.execute(accountNumber);
+    @GetMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AccountResponseDto> getAccount(@RequestParam(value = "numero_conta", required = true) String accountNumber) {
+        AccountResponseDto response = retrieveAccountCommand.execute(accountNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
