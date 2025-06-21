@@ -30,3 +30,7 @@
 ```bash
   mvn org.pitest:pitest-maven:mutationCoverage
 ```
+
+## Documentação
+
+Com o projeto rodando, a documentação pode ser acessada em http://localhost:8080/swagger-ui.html

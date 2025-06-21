@@ -1,6 +1,7 @@
 package com.ng.billing.bank.resource.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,6 @@ public class PaymentRequestDto {
     private BigDecimal amount;
 
     @JsonProperty("forma_pagamento")
+    @Schema(implementation = PaymentMethodTypeEnum.class)
     private PaymentMethodTypeEnum paymentMethod;
 }
