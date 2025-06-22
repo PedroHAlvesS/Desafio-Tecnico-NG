@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.ng.billing.bank.domain.exception.ErrosEnum;
 import com.ng.billing.bank.domain.exception.generic.GenericException;
+import com.ng.billing.bank.domain.fee.CreditCardFeeStrategy;
+import com.ng.billing.bank.domain.fee.DebitCardFeeStrategy;
+import com.ng.billing.bank.domain.fee.FeeStrategy;
+import com.ng.billing.bank.domain.fee.PixFeeStrategy;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -13,16 +17,16 @@ import java.math.RoundingMode;
 @RequiredArgsConstructor
 @Getter
 public enum PaymentMethodTypeEnum {
-    PIX("P", new BigDecimal("1.00")),
-    DEBIT_CARD("D", new BigDecimal("1.03")),
-    CREDIT_CARD("C", new BigDecimal("1.05"));
+    PIX("P", new PixFeeStrategy()),
+    DEBIT_CARD("D", new DebitCardFeeStrategy()),
+    CREDIT_CARD("C", new CreditCardFeeStrategy());
 
     private final String description;
 
-    private final BigDecimal fee;
+    private final FeeStrategy feeStrategy;
 
     public BigDecimal totalAmountAfterFee(BigDecimal amount) {
-        return amount.multiply(fee).setScale(2, RoundingMode.HALF_EVEN);
+        return feeStrategy.calculateTotalAmount(amount);
     }
 
     @JsonCreator
