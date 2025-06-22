@@ -31,7 +31,7 @@ public class PaymentCommand {
         AccountEntity entity = accountRepository.findByAccountNumber(requestDto.getAccountNumber())
                 .orElseThrow(() -> new GenericException(ErrosEnum.NOT_FOUND));
 
-        BigDecimal totalAmountAfterFee = requestDto.getPaymentMethod().totalAmountAfterFee(requestDto.getAmount());
+        BigDecimal totalAmountAfterFee = requestDto.getPaymentMethod().getFeeStrategy().calculateTotalAmount(requestDto.getAmount());
 
         if (entity.getAccountBalance().compareTo(totalAmountAfterFee) < 0) {
             logger.error("[PaymentCommand:execute] Payment for account {} with insufficient balance", requestDto.getAccountNumber());

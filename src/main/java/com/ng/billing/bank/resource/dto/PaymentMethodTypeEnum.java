@@ -11,9 +11,6 @@ import com.ng.billing.bank.domain.fee.PixFeeStrategy;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 @RequiredArgsConstructor
 @Getter
 public enum PaymentMethodTypeEnum {
@@ -25,9 +22,6 @@ public enum PaymentMethodTypeEnum {
 
     private final FeeStrategy feeStrategy;
 
-    public BigDecimal totalAmountAfterFee(BigDecimal amount) {
-        return feeStrategy.calculateTotalAmount(amount);
-    }
 
     @JsonCreator
     public static PaymentMethodTypeEnum fromDescription(String description) {

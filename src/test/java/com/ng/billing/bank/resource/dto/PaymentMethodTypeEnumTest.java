@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,44 +48,6 @@ class PaymentMethodTypeEnumTest {
                 @DisplayName("Then throw GenericException")
                 void thenThrowGenericException() {
                     assertThrows(GenericException.class, () -> PaymentMethodTypeEnum.fromDescription("X"));
-                }
-            }
-        }
-
-        @Nested
-        @DisplayName("When totalAmountAfterFee is called")
-        class WhenTotalAmountAfterFeeIsCalled {
-
-            @Nested
-            @DisplayName("And paymentMethodTypeEnum is PIX")
-            class AndPaymentMethodTypeEnumIsPix {
-                @Test
-                @DisplayName("Then return amount")
-                void thenReturnAmount() {
-                    BigDecimal amount = new BigDecimal("10.00");
-                    assertEquals(new BigDecimal("10.00"), PaymentMethodTypeEnum.PIX.totalAmountAfterFee(amount));
-                }
-            }
-
-            @Nested
-            @DisplayName("And paymentMethodTypeEnum is DEBIT_CARD")
-            class AndPaymentMethodTypeEnumIsDebitCard {
-                @Test
-                @DisplayName("Then return amount")
-                void thenReturnAmount() {
-                    BigDecimal amount = new BigDecimal("10.00");
-                    assertEquals(new BigDecimal("10.30"), PaymentMethodTypeEnum.DEBIT_CARD.totalAmountAfterFee(amount));
-                }
-            }
-
-            @Nested
-            @DisplayName("And paymentMethodTypeEnum is CREDIT_CARD")
-            class AndPaymentMethodTypeEnumIsCreditCard {
-                @Test
-                @DisplayName("Then return amount")
-                void thenReturnAmount() {
-                    BigDecimal amount = new BigDecimal("10.00");
-                    assertEquals(new BigDecimal("10.50"), PaymentMethodTypeEnum.CREDIT_CARD.totalAmountAfterFee(amount));
                 }
             }
         }
